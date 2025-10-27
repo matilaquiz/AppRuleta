@@ -87,6 +87,8 @@ export default function Home() {
   };
 +/*/
 
+  const listaPremios = premios.length > 0 ? premios : premiosEjemplo;
+
   const girarRuleta = () => {
     if (girando) return;
     if (!competidor) {
@@ -98,8 +100,8 @@ export default function Home() {
     setGirando(true);
 
     const giros = 5; // cantidad de vueltas completas
-    const premioIndex = Math.floor(Math.random() * premios.length);
-    const anguloPorPremio = 360 / premios.length;
+    const premioIndex = Math.floor(Math.random() * listaPremios.length);
+    const anguloPorPremio = 360 / listaPremios.length;
     const sectorCenter = premioIndex * anguloPorPremio;
     const anguloFinal = 360 * giros + (360 - (sectorCenter % 360));
 
@@ -110,7 +112,7 @@ export default function Home() {
       useNativeDriver: true,
     }).start(() => {
       setGirando(false);
-      setGanador(premios[premioIndex]);
+      setGanador(listaPremios[premioIndex]);
       rotateAnim.setValue(anguloFinal % 360); // deja el ángulo final
     });
   };
@@ -119,8 +121,6 @@ export default function Home() {
     inputRange: [0, 360],
     outputRange: ["0deg", "360deg"],
   });
-
-  const listaPremios = premios.length > 0 ? premios : premiosEjemplo;
 
   const sectores = listaPremios.map((premio, i) => {
     const rotacion = (360 / listaPremios.length) * i;
@@ -154,7 +154,7 @@ export default function Home() {
             busca && { backgroundColor: "#999" },
             { marginBottom: 40 },
           ]}
-          onPress={buscarJugador}
+          onPress={jugadores.length > 0 ? buscarJugador : null}
           disabled={busca}
         >
           <Ionicons

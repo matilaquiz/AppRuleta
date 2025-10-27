@@ -22,13 +22,24 @@ export default function NewTask() {
         value={nuevoJugador}
         onSubmitEditing={() => {
           if (nuevoJugador.trim() === "") return;
-          setJugadores([...jugadores, nuevoJugador]);
+          const jugadorExistente = jugadores.find(
+            (j) => j === nuevoJugador.trim()
+          );
+          if (jugadorExistente) {
+            alert("El participante ya existe");
+          } else {
+            setJugadores([...jugadores, nuevoJugador]);
+          }
           setNuevoJugador("");
         }}
       />
-      {jugadores.map((j, i) => (
-        <Text key={i}>{j}</Text>
-      ))}
+      <View style={styles.card}>
+        {jugadores.map((j, i) => (
+          <Text style={styles.textoBoton} key={i}>
+            {j}
+          </Text>
+        ))}
+      </View>
 
       <Text style={{ color: "white", fontSize: 24 }}>Escriba los paremios</Text>
       <TextInput
@@ -43,9 +54,13 @@ export default function NewTask() {
           setNuevoPremio("");
         }}
       />
-      {premios.map((j, i) => (
-        <Text key={i}>{j}</Text>
-      ))}
+      <View style={styles.card}>
+        {premios.map((j, i) => (
+          <Text style={styles.textoBoton} key={i}>
+            {j}
+          </Text>
+        ))}
+      </View>
     </View>
   );
 }
@@ -65,16 +80,21 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     textAlign: "center",
   },
-  ruleta: {
+  card: {
     width: radius * 2,
-    height: radius * 2,
-    borderRadius: radius,
+
+    marginTop: 20,
+    backgroundColor: "rgba(85, 82, 88, 1)",
+    backgroundColor: "rgba(85, 82, 88, 1)",
+    borderRadius: 20,
     borderWidth: 3,
     borderColor: "rgba(219, 166, 51,1)",
-    alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-around",
+    flexDirection: "row",
+    flexWrap: "wrap",
     position: "relative",
     overflow: "hidden",
+    padding: 10,
   },
   sector: {
     position: "absolute",
@@ -109,14 +129,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   textoBoton: {
-    color: "white",
     fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 10,
+    backgroundColor: "white",
+    width: "auto",
+    height: 30,
     fontSize: 18,
-  },
-  resultado: {
-    color: "#fff",
-    marginTop: 20,
-    fontSize: 22,
-    fontWeight: "bold",
+    paddingHorizontal: 5,
+    paddingVertical: 5,
+    borderRadius: 5,
   },
 });
