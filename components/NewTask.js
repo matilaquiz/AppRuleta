@@ -53,10 +53,8 @@ export default function NewTask() {
         />
         <View style={styles.card}>
           {jugadores.map((j, i) => (
-            <View style={styles.textoBoton}>
-              <Text style={styles.texto} key={i}>
-                {j}
-              </Text>
+            <View style={styles.textoBoton} key={i}>
+              <Text style={styles.texto}>{j}</Text>
               <TouchableOpacity onPress={() => eliminarJugador(i)}>
                 <Text style={styles.x}>✖</Text>
               </TouchableOpacity>
@@ -83,10 +81,8 @@ export default function NewTask() {
         />
         <View style={styles.card}>
           {premios.map((j, i) => (
-            <View style={styles.textoBoton}>
-              <Text style={styles.texto} key={i}>
-                {j}
-              </Text>
+            <View style={styles.textoBoton} key={i}>
+              <Text style={styles.texto}>{j}</Text>
               <TouchableOpacity onPress={() => eliminarPremio(i)}>
                 <Text style={styles.x}>✖</Text>
               </TouchableOpacity>

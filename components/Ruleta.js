@@ -20,10 +20,10 @@ export default function Wheel({ competidor, research }) {
   const { premios } = React.useContext(AppContext);
 
   const premiosEjemplo = [
-    "auto",
+    "automovil",
     "motocicleta",
     "bicicleta",
-    "patinete",
+    "tv 50'",
     "skateboard",
   ];
 
