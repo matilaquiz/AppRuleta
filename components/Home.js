@@ -12,22 +12,15 @@ import {
   ScrollView,
 } from "react-native";
 import { AppContext } from "./ContextApp";
+import Wheel from "./Ruleta";
 
 const { width } = Dimensions.get("window");
 const radius = width * 0.4; // tamaño de la ruleta
 
 export default function Home() {
-  const { jugadores, premios } = React.useContext(AppContext);
+  const { jugadores } = React.useContext(AppContext);
 
   // const jugadores = ["pepe", "jose", "toboas", "papas", "Jeni", "gabi", "cata"];
-
-  const premiosEjemplo = [
-    "ejemplo1",
-    "ejemplo2",
-    "ejemplo3",
-    "ejemplo4",
-    "ejemplo5",
-  ];
 
   const [competidor, setCompetidor] = useState("");
   const [busca, setBusca] = useState(false);
@@ -87,7 +80,7 @@ export default function Home() {
   };
 +/*/
 
-  const listaPremios = premios.length > 0 ? premios : premiosEjemplo;
+  /*   const listaPremios = premios.length > 0 ? premios : premiosEjemplo;
 
   const girarRuleta = () => {
     if (girando) return;
@@ -122,6 +115,14 @@ export default function Home() {
     outputRange: ["0deg", "360deg"],
   });
 
+  const colores = [
+    "rgba(245, 66, 66, 0.6)",
+    "rgba(245, 161, 66, 0.6)",
+    "rgba(245, 226, 66, 0.6)",
+    "rgba(66, 245, 84, 0.6)",
+    "rgba(66, 135, 245, 0.6)",
+    "rgba(184, 66, 245, 0.6)",
+  ];
   const sectores = listaPremios.map((premio, i) => {
     const rotacion = (360 / listaPremios.length) * i;
     return (
@@ -130,6 +131,7 @@ export default function Home() {
         style={[
           styles.sector,
           {
+            borderBlockColor: colores[i],
             transform: [
               { rotate: `${rotacion}deg` },
               { translateY: -radius / 2 },
@@ -140,7 +142,7 @@ export default function Home() {
         <Text style={styles.texto}>{premio}</Text>
       </View>
     );
-  });
+  }); */
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "#222831" }}>
@@ -170,8 +172,8 @@ export default function Home() {
               : "BUSCAR JUGADOR"}
           </Text>
         </Pressable>
-        <View style={styles.indicador} />
-        <Animated.View
+
+        {/* <Animated.View
           style={[styles.ruleta, { transform: [{ rotate: interpolacion }] }]}
         >
           {sectores}
@@ -190,14 +192,8 @@ export default function Home() {
           <Text style={styles.textoBoton}>
             {girando ? "Girando..." : "GIRAR"}
           </Text>
-        </TouchableOpacity>
-
-        <Text style={styles.resultado}>
-          🎯{" "}
-          {ganador
-            ? `${competidor} ha ganado un/a ${ganador}`
-            : "aún no tiene resultado"}
-        </Text>
+        </TouchableOpacity> */}
+        <Wheel competidor={competidor} research={research} />
       </View>
     </ScrollView>
   );
@@ -232,18 +228,9 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     fontSize: 16,
+    backgroundColor: "rgba(0,0,0,0.5)",
   },
-  indicador: {
-    width: 0,
-    height: 0,
-    borderLeftWidth: 12,
-    borderRightWidth: 12,
-    borderTopWidth: 20,
-    borderLeftColor: "transparent",
-    borderRightColor: "transparent",
-    borderTopColor: "red",
-    marginBottom: 10,
-  },
+
   boton: {
     marginTop: 40,
     backgroundColor: "#6b7531ff",

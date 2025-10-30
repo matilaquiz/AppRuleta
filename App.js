@@ -23,7 +23,7 @@ export default function App() {
 
               if (route.name === "Ruleta") {
                 icono = focused ? "disc" : "disc-outline";
-              } else if (route.name === "Ganadores") {
+              } else if (route.name === "Premios y Participantes") {
                 icono = focused ? "gift" : "gift-outline";
               }
               return <Ionicons name={icono} size={size} color={color} />;
@@ -37,7 +37,26 @@ export default function App() {
           })}
         >
           <Tab.Screen name="Ruleta" component={Home} />
-          <Tab.Screen name="Ganadores" component={NewTask} />
+          <Tab.Screen
+            name="Premios y Participantes"
+            component={NewTask}
+            options={{
+              tabBarLabel: ({ focused }) => (
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontSize: 10,
+                    fontWeight: focused ? "bold" : "normal",
+                    color: focused
+                      ? "rgba(85, 82, 88, 1)"
+                      : "rgba(148, 143, 153, 1)",
+                  }}
+                >
+                  Participantes{"\n"}Premios
+                </Text>
+              ),
+            }}
+          />
         </Tab.Navigator>
       </NavigationContainer>
     </AppProvider>

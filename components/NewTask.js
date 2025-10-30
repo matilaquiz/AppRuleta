@@ -1,5 +1,12 @@
 import React from "react";
-import { Text, StyleSheet, View, Dimensions, TextInput } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  Dimensions,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { AppContext } from "./ContextApp";
 
 const radius = Dimensions.get("window").width * 0.4; // tamaño de la ruleta
@@ -9,57 +16,83 @@ export default function NewTask() {
   const [nuevoJugador, setNuevoJugador] = React.useState("");
   const [nuevoPremio, setNuevoPremio] = React.useState("");
 
+  const eliminarJugador = (index) => {
+    const actualizacionJugadores = jugadores.filter((_, i) => i !== index);
+    setJugadores(actualizacionJugadores);
+  };
+
+  const eliminarPremio = (index) => {
+    const actualizacionPremios = premios.filter((_, i) => i !== index);
+    setPremios(actualizacionPremios);
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={{ color: "white", fontSize: 24 }}>
-        Escriba los participantes
-      </Text>
-      <TextInput
-        style={styles.Input}
-        placeholder="Escriba el nuevo participante"
-        placeholderTextColor="#7e7777ff"
-        onChangeText={setNuevoJugador}
-        value={nuevoJugador}
-        onSubmitEditing={() => {
-          if (nuevoJugador.trim() === "") return;
-          const jugadorExistente = jugadores.find(
-            (j) => j === nuevoJugador.trim()
-          );
-          if (jugadorExistente) {
-            alert("El participante ya existe");
-          } else {
-            setJugadores([...jugadores, nuevoJugador]);
-          }
-          setNuevoJugador("");
-        }}
-      />
-      <View style={styles.card}>
-        {jugadores.map((j, i) => (
-          <Text style={styles.textoBoton} key={i}>
-            {j}
-          </Text>
-        ))}
+      <View style={styles.subConteiner}>
+        <Text style={{ color: "white", fontSize: 24 }}>
+          Ingrese los participantes
+        </Text>
+        <TextInput
+          style={styles.Input}
+          placeholder="Escriba el nuevo participante"
+          placeholderTextColor="#7e7777ff"
+          onChangeText={setNuevoJugador}
+          value={nuevoJugador}
+          onSubmitEditing={() => {
+            if (nuevoJugador.trim() === "") return;
+            const jugadorExistente = jugadores.find(
+              (j) => j === nuevoJugador.trim()
+            );
+            if (jugadorExistente) {
+              alert("El participante ya existe");
+            } else {
+              setJugadores([...jugadores, nuevoJugador]);
+            }
+            setNuevoJugador("");
+          }}
+        />
+        <View style={styles.card}>
+          {jugadores.map((j, i) => (
+            <View style={styles.textoBoton}>
+              <Text style={styles.texto} key={i}>
+                {j}
+              </Text>
+              <TouchableOpacity onPress={() => eliminarJugador(i)}>
+                <Text style={styles.x}>✖</Text>
+              </TouchableOpacity>
+            </View>
+          ))}
+        </View>
       </View>
 
-      <Text style={{ color: "white", fontSize: 24 }}>Escriba los paremios</Text>
-      <TextInput
-        style={styles.Input}
-        placeholder="Escriba el nuevo premio"
-        placeholderTextColor="#7e7777ff"
-        onChangeText={setNuevoPremio}
-        value={nuevoPremio}
-        onSubmitEditing={() => {
-          if (nuevoPremio.trim() === "") return;
-          setPremios([...premios, nuevoPremio]);
-          setNuevoPremio("");
-        }}
-      />
-      <View style={styles.card}>
-        {premios.map((j, i) => (
-          <Text style={styles.textoBoton} key={i}>
-            {j}
-          </Text>
-        ))}
+      <View style={styles.subConteiner}>
+        <Text style={{ color: "white", fontSize: 24 }}>
+          Ingrese los premios
+        </Text>
+        <TextInput
+          style={styles.Input}
+          placeholder="Escriba el nuevo premio"
+          placeholderTextColor="#7e7777ff"
+          onChangeText={setNuevoPremio}
+          value={nuevoPremio}
+          onSubmitEditing={() => {
+            if (nuevoPremio.trim() === "") return;
+            setPremios([...premios, nuevoPremio]);
+            setNuevoPremio("");
+          }}
+        />
+        <View style={styles.card}>
+          {premios.map((j, i) => (
+            <View style={styles.textoBoton}>
+              <Text style={styles.texto} key={i}>
+                {j}
+              </Text>
+              <TouchableOpacity onPress={() => eliminarPremio(i)}>
+                <Text style={styles.x}>✖</Text>
+              </TouchableOpacity>
+            </View>
+          ))}
+        </View>
       </View>
     </View>
   );
@@ -67,6 +100,12 @@ export default function NewTask() {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#222831",
+  },
+  subConteiner: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
@@ -82,7 +121,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: radius * 2,
-
+    minHeight: 130,
     marginTop: 20,
     backgroundColor: "rgba(85, 82, 88, 1)",
     backgroundColor: "rgba(85, 82, 88, 1)",
@@ -104,9 +143,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   texto: {
-    color: "white",
+    color: "black",
     fontWeight: "bold",
     fontSize: 16,
+    marginEnd: 5,
   },
   indicador: {
     width: 0,
@@ -129,6 +169,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   textoBoton: {
+    flexDirection: "row",
+    justifyContent: "space-around",
     fontWeight: "bold",
     textAlign: "center",
     marginTop: 10,
@@ -137,7 +179,7 @@ const styles = StyleSheet.create({
     height: 30,
     fontSize: 18,
     paddingHorizontal: 5,
-    paddingVertical: 5,
+    paddingVertical: 2,
     borderRadius: 5,
   },
 });
